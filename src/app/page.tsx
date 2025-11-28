@@ -42,6 +42,7 @@ export default function Home() {
   const [eventsError, setEventsError] = useState<string | null>(null);
 
   const chandigarhRef = useRef<HTMLSpanElement | null>(null);
+  const typerRef = useRef<HTMLSpanElement | null>(null);
 
   // Fetch events from API
   useEffect(() => {
@@ -91,7 +92,7 @@ export default function Home() {
     };
   }, []);
 
-  // Scramble effect for Chandigarh text
+  // SCRAMBLE effect for Chandigarh text (runs once on mount)
   useEffect(() => {
     const el = chandigarhRef.current;
     if (!el) return;
@@ -99,16 +100,17 @@ export default function Home() {
     const finalText = "Chandigarh";
     const charset =
       "!<>-_\\/[]{}—=+*^?#abcdefghijkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    const duration = 3500;
-    const frameRate = 30;
+    const duration = 1800; // shortened a bit for snappier feel
+    const frameRate = 45;
     const totalFrames = Math.round((duration / 1000) * frameRate);
     let frame = 0;
 
+    // staggered reveal and settle frames for nicer effect
     const revealFrames: number[] = Array.from({ length: finalText.length }).map(
-      (_, i) => Math.floor((i / finalText.length) * totalFrames * 0.4)
+      (_, i) => Math.floor((i / finalText.length) * totalFrames * 0.35)
     );
     const settleFrames: number[] = Array.from({ length: finalText.length }).map(
-      (_, i) => Math.floor((i / finalText.length) * totalFrames * 0.7 + totalFrames * 0.3)
+      (_, i) => Math.floor((i / finalText.length) * totalFrames * 0.65 + totalFrames * 0.25)
     );
 
     let rafId: number;
@@ -141,22 +143,130 @@ export default function Home() {
     return () => cancelAnimationFrame(rafId);
   }, []);
 
+  // TYPEWRITER effect cycling through English, Hindi, Punjabi
+  useEffect(() => {
+    const el = typerRef.current;
+    if (!el) return;
+
+    // strings in order: English (same Latin), Hindi, Punjabi
+    const phrases = [
+      { text: "Chandigarh", lang: "en" },
+      { text: "चंडीगढ़", lang: "hi" },
+      { text: "ਚੰਡੀਗੜ੍ਹ", lang: "pa" },
+    ];
+
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let timeoutId: number | null = null;
+
+    // timings (ms)
+    const TYPING_SPEED = 80;
+    const DELETING_SPEED = 40;
+    const HOLD_AFTER_TYPING = 1200;
+    const HOLD_AFTER_DELETING = 250;
+
+    function tick() {
+      const current = phrases[phraseIndex];
+      const fullText = current.text;
+
+      if (!isDeleting) {
+        // type forward
+        charIndex = Math.min(charIndex + 1, fullText.length);
+        el.textContent = fullText.slice(0, charIndex);
+        el.setAttribute("lang", current.lang);
+        if (charIndex === fullText.length) {
+          // stay, then delete
+          timeoutId = window.setTimeout(() => {
+            isDeleting = true;
+            tick();
+          }, HOLD_AFTER_TYPING);
+          return;
+        }
+        timeoutId = window.setTimeout(tick, TYPING_SPEED + Math.random() * 60);
+      } else {
+        // deleting
+        charIndex = Math.max(charIndex - 1, 0);
+        el.textContent = fullText.slice(0, charIndex);
+        if (charIndex === 0) {
+          // move to next phrase
+          isDeleting = false;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+          timeoutId = window.setTimeout(tick, HOLD_AFTER_DELETING);
+          return;
+        }
+        timeoutId = window.setTimeout(tick, DELETING_SPEED);
+      }
+    }
+
+    // start with a small delay so scramble can finish visually
+    timeoutId = window.setTimeout(tick, 700);
+
+    return () => {
+      if (timeoutId) window.clearTimeout(timeoutId);
+    };
+  }, []);
+
   return (
     <>
       <style>{`
+        /* --- Scramble characters --- */
         .scramble-char { 
           display:inline-block; 
           width: 1ch;
-          height: 1.125rem;
-          line-height: 1.125rem;
+          height: 1.25rem;
+          line-height: 1.25rem;
           transition: transform 160ms ease, opacity 160ms ease; 
-          font-weight:700; 
+          font-weight:800; 
+          letter-spacing: -0.02em;
         }
-        .scramble-char.placeholder { opacity: 0; }
+        .scramble-char.placeholder { opacity: 0; transform: translateY(2px); }
         .scramble-char[aria-hidden="true"] { filter: blur(0.1px); color: currentColor; }
-        .reveal-final { transition: color 400ms ease, text-shadow 400ms ease; }
-        .spin-cw { animation: spin360 12s linear infinite; }
+
+        /* --- Typing line --- */
+        .typed-line {
+          display: inline-block;
+          font-weight: 800;
+          letter-spacing: -0.02em;
+          margin-top: 6px;
+          font-size: 1.15rem;
+          min-height: 1.4rem;
+        }
+        /* Caret */
+        .typed-line::after {
+          content: "";
+          display: inline-block;
+          width: 1px;
+          height: 1.05rem;
+          margin-left: 6px;
+          vertical-align: middle;
+          background: currentColor;
+          animation: blink 1s steps(2, start) infinite;
+        }
+        @keyframes blink {
+          50% { opacity: 0; }
+        }
+
+        /* Spin + glow utilities */
+        .spin-cw { animation: spin360 14s linear infinite; }
         @keyframes spin360 { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* Radial / conic helpers for glow look */
+        .bg-gradient-conic {
+          background-image: conic-gradient(from 0deg, #3b82f6, #10b981, #fbbf24, #ef4444, #3b82f6);
+        }
+        .bg-radial {
+          background-image: radial-gradient(circle at center, rgba(59,130,246,0.18), transparent 30%);
+        }
+
+        /* Responsive headline sizing */
+        .heroMainTitle { font-size: 2.25rem; }
+        @media (min-width: 768px) {
+          .heroMainTitle { font-size: 3rem; }
+        }
+        @media (min-width: 1024px) {
+          .heroMainTitle { font-size: 3.5rem; }
+        }
       `}</style>
 
       {/* HERO SECTION */}
@@ -166,10 +276,10 @@ export default function Home() {
           {/* LOGO + GLOW */}
           <div className="relative flex items-center justify-center">
             <div
-              className="spin-cw absolute w-[140px] h-[140px] bg-gradient-conic from-blue-500 via-green-500 via-yellow-400 via-red-500 to-blue-500 blur-3xl opacity-70 rounded-full rotatingColor"
+              className="spin-cw absolute w-[140px] h-[140px] bg-gradient-conic blur-3xl opacity-70 rounded-full"
             />
             <div
-              className="spin-cw absolute w-[160px] h-[160px] bg-radial from-blue-500 via-transparent to-transparent blur-[60px] opacity-40 rounded-full srinkingColor"
+              className="spin-cw absolute w-[160px] h-[160px] bg-radial blur-[60px] opacity-40 rounded-full"
             />
 
             <Image
@@ -182,14 +292,29 @@ export default function Home() {
           </div>
 
           {/* TITLE + SUBTEXT */}
-          <div className="max-w-3xl mx-auto mt-6">
-            <span
-              ref={chandigarhRef}
-              aria-live="polite"
-              className="text-4xl md:text-5xl font-extrabold text-red-600 reveal-final"
-            >
-              Chandigarh
-            </span>
+          <div className="max-w-3xl mx-auto my-6">
+            {/* Main (scramble) */}
+            <div className="flex flex-col items-center">
+              {/* <span
+                ref={chandigarhRef}
+                aria-live="polite"
+                className="heroMainTitle font-extrabold text-4xl md:text-5xl text-red-600 reveal-final"
+                style={{ lineHeight: 1 }}
+              >
+                Chandigarh
+              </span> */}
+
+              {/* Typed multilingual line (cycles) */}
+              <span
+                ref={typerRef}
+                aria-hidden="false"
+                className="typed-line text-foreground/90 font-extrabold text-4xl md:text-5xl heroMainTitle"
+                
+                lang="en"
+              >
+                Chandigarh
+              </span>
+            </div>
 
             <p className="heroContent mt-5 text-base md:text-lg text-foreground/80 font-medium max-w-2xl mx-auto">
               In the City Beautiful, the heart of Artificial Intelligence beats, where the brightest minds in AI connect, collaborate, and innovate allowing AI/ML enthusiasts, developers, and researchers to learn, share, and grow together.
@@ -292,13 +417,6 @@ export default function Home() {
                             <span className="font-semibold text-sm">Completed</span>
                           </span>
                         </div>
-
-                        {/* <div className="text-sm text-muted-foreground">
-                          Interested Members:{" "}
-                          <span className="font-medium text-foreground">
-                            {event.raw?.interested_count ?? event.raw?.interested || "—"}
-                          </span>
-                        </div> */}
                       </div>
 
                       {/* Title */}
@@ -313,13 +431,6 @@ export default function Home() {
                           <span className="date">{event.date}</span>
                         </div>
                       </div>
-
-                      {/* Short description (clamped) */}
-                      {/* {event.description && (
-                        <p className="text-sm text-muted-foreground mb-6 line-clamp-3">
-                          {event.description}
-                        </p>
-                      )} */}
                     </div>
 
                     {/* Action row */}
@@ -363,36 +474,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* TEAM SECTION */}
-      {/* <section className="py-12 md:py-20 bg-muted/30 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <h2 className="font-bold tracking-tight font-headline">Meet the Organizers</h2>
-            <p className="mt-3 text-lg text-muted-foreground">The team behind the AI community Chandigarh.</p>
-          </div>
-
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {team.map((member) => {
-              const image = PlaceHolderImages.find((p) => p.id === member.imageId);
-              return (
-                <MemberCard
-                  key={member.id}
-                  member={member}
-                  image={image}
-                  onOpenModal={() => setSelectedMember(member)}
-                />
-              );
-            })}
-          </div>
-
-          <div className="text-center mt-10">
-            <Button asChild variant="outline">
-              <Link href="/team">View All Team Members</Link>
-            </Button>
-          </div>
-        </div>
-      </section> */}
 
       <SocialFollowSection />
 
