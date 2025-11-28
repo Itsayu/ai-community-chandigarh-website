@@ -1,0 +1,88 @@
+{
+  "placeholderImages": [
+    {
+      "id": "project-1",
+      "description": "AI Crop Health Monitor project image",
+      "imageUrl": "https://images.unsplash.com/photo-1706862609885-7771b001daa2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxhZ3JpY3VsdHVyZSUyMHRlY2hub2xvZ3l8ZW58MHx8fHwxNzY0MDI3MzEwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "agriculture technology"
+    },
+    {
+      "id": "project-2",
+      "description": "Punjabi NLP Library project image",
+      "imageUrl": "https://images.unsplash.com/photo-1552417559-f62e53cba705?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxsYW5ndWFnZSUyMHByb2Nlc3Npbmd8ZW58MHx8fHwxNzY0MDc2ODI1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "language processing"
+    },
+    {
+      "id": "project-3",
+      "description": "Smart Traffic Management System project image",
+      "imageUrl": "https://images.unsplash.com/photo-1696238560111-4011f31a90c6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxjaXR5JTIwdHJhZmZpY3xlbnwwfHx8fDE3NjQwNjc5Mjd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "city traffic"
+    },
+    {
+      "id": "project-4",
+      "description": "AI-Powered Retail Analytics",
+      "imageUrl": "https://images.unsplash.com/photo-1728044849280-10a1a75cff83?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxyZXRhaWwlMjBhbmFseXRpY3N8ZW58MHx8fHwxNzY0MDc2ODI1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "retail analytics"
+    },
+    {
+      "id": "news-1",
+      "description": "Article about AI startup funding",
+      "imageUrl": "https://images.unsplash.com/photo-1733826544831-ad71d05c8423?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxzdGFydHVwJTIwZnVuZGluZ3xlbnwwfHx8fDE3NjQwNzY4MjV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "startup funding"
+    },
+    {
+      "id": "news-2",
+      "description": "Article about a local hackathon",
+      "imageUrl": "https://images.unsplash.com/photo-1560439514-0fc9d2cd5e1b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxoYWNrYXRob24lMjBldmVudHxlbnwwfHx8fDE3NjQwMDM5Mzh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "hackathon event"
+    },
+    {
+      "id": "news-3",
+      "description": "Article about AI in education",
+      "imageUrl": "https://images.unsplash.com/photo-1581093199592-d3c46ae94f40?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxlZHVjYXRpb24lMjB0ZWNobm9sb2d5fGVufDB8fHx8MTc2Mzk5NDQ0Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "education technology"
+    },
+    {
+      "id": "news-4",
+      "description": "Article about generative art",
+      "imageUrl": "https://images.unsplash.com/photo-1642191911856-eff75c138ead?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Z2VuZXJhdGl2ZSUyMGFydHxlbnwwfHx8fDE3NjQwNDgxNzZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "generative art"
+    },
+    {
+      "id": "member-1",
+      "description": "Profile picture for Anjali Sharma",
+      "imageUrl": "https://images.unsplash.com/photo-1592621385612-4d7129426394?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx3b21hbiUyMHBvcnRyYWl0fGVufDB8fHx8MTc2Mzk1OTYyM3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "woman portrait"
+    },
+    {
+      "id": "member-2",
+      "description": "Profile picture for Rohan Verma",
+      "imageUrl": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjQwNDMwMjd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "man portrait"
+    },
+    {
+      "id": "member-3",
+      "description": "Profile picture for Sunita Kaur",
+      "imageUrl": "https://images.unsplash.com/photo-1573496773322-2567977fde08?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx3b21hbiUyMGRldmVsb3BlcnxlbnwwfHx8fDE3NjQwNDM3MDR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "woman developer"
+    },
+    {
+      "id": "member-4",
+      "description": "Profile picture for Vikram Singh",
+      "imageUrl": "https://images.unsplash.com/photo-1619241805829-34fb64299391?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxtYW4lMjBkZXZlbG9wZXJ8ZW58MHx8fHwxNzY0MDc2ODI1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "man developer"
+    },
+    {
+      "id": "member-5",
+      "description": "Profile picture for Meera Patel",
+      "imageUrl": "https://images.unsplash.com/photo-1489389944381-3471b5b30f04?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxkYXRhJTIwc2NpZW50aXN0fGVufDB8fHx8MTc2NDA3NjgyNXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "data scientist"
+    },
+    {
+      "id": "member-6",
+      "description": "Profile picture for Arjun Das",
+      "imageUrl": "https://images.unsplash.com/photo-1624639944973-6c99dcddc98d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtYW4lMjBlbmdpbmVlcnxlbnwwfHx8fDE3NjQwNzY4MjV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "man engineer"
+    }
+  ]
+}

@@ -1,0 +1,228 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .grid-bg {
+    width: 100%;
+    height: 100%;
+    --grid-size: 40px;
+    --grid-strength: 0.15;
+    --grid-dash: 1px;
+    --grid-color: #54545422;
+    --dot-color: hsl(var(--foreground));
+    --mask-size: 250px; 
+    background-size: var(--grid-size) var(--grid-size), var(--grid-size) var(--grid-size);
+    background-image:
+      linear-gradient(to right, var(--grid-color) var(--grid-dash), transparent 1%),
+      linear-gradient(to bottom, var(--grid-color) var(--grid-dash), transparent 1%);
+    /* Make the grid visible only at cursor: radial mask centered at custom vars --x and --y */
+    mask-image: radial-gradient(circle at var(--x, 50%) var(--y, 50%), white 0, transparent var(--mask-size));
+    -webkit-mask-image: radial-gradient(circle at var(--x, 50%) var(--y, 50%), white 0, transparent var(--mask-size));
+    transition: --mask-size 0.25s ease-in-out;
+  }
+
+  .grid-bg:hover {
+    --mask-size: 40px; /* expand visible area a bit on hover */
+  }
+
+  .lights {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    filter: blur(100px);
+    transform-style: preserve-3d;
+    z-index: -1;
+  }
+
+  .light {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    mix-blend-mode: soft-light;
+    opacity: 0.8;
+  }
+
+  .light.blue { background: #4285f4; animation: move-blue 12s ease-in-out infinite; }
+  .light.red { background: #ea4335; animation: move-red 12s ease-in-out infinite; animation-delay: -3s; }
+  .light.yellow { background: #fbbc05; animation: move-yellow 12s ease-in-out infinite; animation-delay: -6s; }
+  .light.green { background: #34a853; animation: move-green 12s ease-in-out infinite; animation-delay: -9s; }
+
+  .spark {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: transparent;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 50;
+  }
+  
+  .spark::before {
+    content: '';
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    --spark-color: hsl(var(--primary) / 0.9);
+    background-image:
+      repeating-conic-gradient(
+        from 0deg,
+        var(--spark-color) 0deg 5deg,
+        transparent 5deg 45deg
+      );
+    border-radius: 50%;
+    animation: spark-animation 600ms ease-out forwards;
+    mask: radial-gradient(circle at center, white 0%, transparent 50%);
+  }
+}
+
+@keyframes spark-animation {
+  from {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes move-blue {
+  0%, 100% { transform: translate3d(20%, 20%, 0); }
+  50% { transform: translate3d(80%, 80%, 0); }
+}
+@keyframes move-red {
+  0%, 100% { transform: translate3d(80%, 20%, 0); }
+  50% { transform: translate3d(20%, 80%, 0); }
+}
+@keyframes move-yellow {
+  0%, 100% { transform: translate3d(80%, 80%, 0); }
+  50% { transform: translate3d(20%, 20%, 0); }
+}
+@keyframes move-green {
+  0%, 100% { transform: translate3d(20%, 80%, 0); }
+  50% { transform: translate3d(80%, 20%, 0); }
+}
+
+/* Add responsive typography */
+@layer base {
+  h1 {
+    @apply text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl;
+  }
+  h2 {
+    @apply text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl;
+  }
+  h3 {
+    @apply text-xl font-semibold md:text-2xl;
+  }
+  p, li, a, span {
+    @apply text-base;
+  }
+  
+  .container {
+    @apply mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
+@keyframes spin-clockwise {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.spin-cw {
+  animation: spin-clockwise 6s linear infinite;
+}
+
+.heroContent {
+  color: #47494d !important;
+}
+
+.rotatingColor {
+  position: absolute; width: 140px; height: 140px; border-radius: 50%; background: conic-gradient(rgb(66, 133, 244), rgb(52, 168, 83), rgb(251, 188, 4), rgb(234, 67, 53), rgb(66, 133, 244)); filter: blur(40px); opacity: 0.8; z-index: 0; transform: scale(1.04595) rotate(159.84deg);
+}
+
+.srinkingColor {
+  position: absolute; width: 160px; height: 160px; border-radius: 50%; background: radial-gradient(circle, rgb(66, 133, 244) 0%, transparent 70%); filter: blur(60px); opacity: 0.4; z-index: -1; transform: scale(1.49953);
+}
+
+.date {
+  font-size: 0.875rem; 
+}
