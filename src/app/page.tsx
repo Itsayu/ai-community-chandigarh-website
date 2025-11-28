@@ -26,7 +26,6 @@ interface Event {
   raw?: any;
 }
 
-/** Try to extract image URL from HTML description */
 function extractImageFromHtml(html: string | undefined | null): string | null {
   if (!html) return null;
   const m = html.match(/<img[^>]+src=(?:'|")([^'">]+)(?:'|")[^>]*>/i);
@@ -44,7 +43,6 @@ export default function Home() {
   const chandigarhRef = useRef<HTMLSpanElement | null>(null);
   const typerRef = useRef<HTMLSpanElement | null>(null);
 
-  // Fetch events from API
   useEffect(() => {
     let mounted = true;
     async function fetchEvents() {
@@ -143,12 +141,10 @@ export default function Home() {
     return () => cancelAnimationFrame(rafId);
   }, []);
 
-  // TYPEWRITER effect cycling through English, Hindi, Punjabi
   useEffect(() => {
     const el = typerRef.current;
     if (!el) return;
 
-    // strings in order: English (same Latin), Hindi, Punjabi
     const phrases = [
       { text: "Chandigarh", lang: "en" },
       { text: "चंडीगढ़", lang: "hi" },
