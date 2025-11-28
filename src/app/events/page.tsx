@@ -135,7 +135,7 @@ export default function EventsPage() {
     );
 
   return (
-    <main className="bg-background w-full">
+    <main className="w-full">
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-14">
         {/* UPCOMING EVENTS */}
         <div className="text-center">
